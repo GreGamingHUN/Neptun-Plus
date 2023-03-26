@@ -48,6 +48,15 @@ class apiCalls {
     var response = await getApiCall(apiCallName);
     return jsonDecode(response)['PeriodTermsList'];
   }
+
+  static getAddedSubjects(periodId) async {
+    query['UserLogin'] = storage.getItem('username');
+    query['Password'] = storage.getItem('password');
+    query['TermId'] = periodId;
+    String apiCallName = '/GetAddedSubjects';
+    var response = await getApiCall(apiCallName);
+    return jsonDecode(response)['AddedSubjectsList'];
+  }
 }
 
 getApiCall(apiCallName) async {

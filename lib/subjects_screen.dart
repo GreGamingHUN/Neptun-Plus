@@ -11,13 +11,18 @@ class SubjectsScreen extends StatefulWidget {
 
 class _SubjectsScreenState extends State<SubjectsScreen> {
   List periodTermsList = [];
-  String selectedValue = "";
+  String selectedValue = '';
+  String? selectedPeriodId = '';
+  List subjectsList = [];
 
   Future<dynamic> getPeriodTermsData() async {
     List tmp = await apiCalls.getPeriodTerms();
-    for (var i = 0; i < tmp.length; i++) {
-      periodTermsList.add(tmp[i]['TermName']);
+    if (periodTermsList.isEmpty) {
+      for (var i = 0; i < tmp.length; i++) {
+        periodTermsList.add(tmp[i]);
+      }
     }
+    print(periodTermsList);
     return periodTermsList;
   }
 
@@ -57,9 +62,9 @@ class _SubjectsScreenState extends State<SubjectsScreen> {
                       ),
                       items: periodTermsList
                           .map((item) => DropdownMenuItem<String>(
-                                value: item,
+                                value: item['Id'].toString(),
                                 child: Text(
-                                  item,
+                                  item['TermName'],
                                   style: const TextStyle(
                                     fontSize: 14,
                                   ),
@@ -73,7 +78,11 @@ class _SubjectsScreenState extends State<SubjectsScreen> {
                         return null;
                       },
                       onChanged: (value) {
-                        //Do something when changing the item if you want.
+                        setState(() {
+                          print(periodTermsList);
+                          print(value);
+                          selectedPeriodId = value;
+                        });
                       },
                       onSaved: (value) {
                         selectedValue = value.toString();
@@ -98,11 +107,57 @@ class _SubjectsScreenState extends State<SubjectsScreen> {
                     ),
                   ),
                 ],
+              ),
+              Expanded(
+                child: SubjectCardsContainer(
+                  periodId: selectedPeriodId,
+                ),
               )
             ],
           );
         } else if (snapshot.hasError) {
           return const Text('Valami elbaszodott');
+        } else {
+          return const CircularProgressIndicator();
+        }
+      },
+    );
+  }
+}
+
+class SubjectCardsContainer extends StatefulWidget {
+  final String? periodId;
+  SubjectCardsContainer({this.periodId}) : super(key: ValueKey(periodId));
+
+  @override
+  State<SubjectCardsContainer> createState() => _SubjectCardsContainerState();
+}
+
+class _SubjectCardsContainerState extends State<SubjectCardsContainer> {
+  List subjectList = [];
+  Future<dynamic> getAddedSubjectsData(periodId) async {
+    subjectList = await apiCalls.getAddedSubjects(periodId);
+    return subjectList;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (widget.periodId == null || widget.periodId == '') {
+      return const Text('asd');
+    }
+    return FutureBuilder(
+      future: getAddedSubjectsData(widget.periodId),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          print(subjectList);
+          return ListView.builder(
+            itemCount: subjectList.length,
+            itemBuilder: (context, index) {
+              return Text(subjectList[index]['SubjectName']);
+            },
+          );
+        } else if (snapshot.hasError) {
+          return const Text('jani nem jo');
         } else {
           return const CircularProgressIndicator();
         }
@@ -121,6 +176,6 @@ class SubjectCard extends StatefulWidget {
 class _SubjectCardState extends State<SubjectCard> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return const Text('cum');
   }
 }
