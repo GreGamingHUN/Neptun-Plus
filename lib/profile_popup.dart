@@ -51,7 +51,7 @@ class _ProfilePopupState extends State<ProfilePopup> {
                     style: TextStyle(fontSize: 13),
                   ),
                   Text(
-                    neptunCode,
+                    'ASD123',
                     style: const TextStyle(
                         fontSize: 20, fontWeight: FontWeight.w500),
                   ),
