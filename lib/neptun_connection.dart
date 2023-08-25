@@ -86,6 +86,31 @@ Future<Map<String, dynamic>> getMessages() async {
   return messagesListAndCount;
 }
 
+Future<List> getPeriodTerms() async {
+  Map<String, dynamic> body = await getLoggedInBody();
+  const String periodTermsPath = '/GetPeriodTerms';
+  const String path = '$defaultPath$periodTermsPath';
+  final url = Uri.https(host, path);
+  var responseBody;
+  try {
+    var response =
+        await http.post(url, headers: defaultHeader, body: jsonEncode(body));
+
+    responseBody = jsonDecode(response.body);
+
+    if (responseBody['ErrorMessages'] != '') {
+      throw NeptunErrorMessage(responseBody['ErrorMessage']);
+    }
+  } on NeptunErrorMessage catch (e) {
+    throw NeptunErrorMessage(e.errorMessage);
+  } catch (e) {
+    print(e);
+  }
+
+  var periodTermsList = responseBody['PeriodTermsList'];
+  return periodTermsList;
+}
+
 class NeptunErrorMessage implements Exception {
   final String errorMessage;
   NeptunErrorMessage(this.errorMessage);
