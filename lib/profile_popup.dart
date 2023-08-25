@@ -41,16 +41,17 @@ class _ProfilePopupState extends State<ProfilePopup> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Column(
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     'Helló,',
                     style: TextStyle(fontSize: 13),
                   ),
                   Text(
-                    'ASD123',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+                    neptunCode,
+                    style: const TextStyle(
+                        fontSize: 20, fontWeight: FontWeight.w500),
                   ),
                 ],
               ),
