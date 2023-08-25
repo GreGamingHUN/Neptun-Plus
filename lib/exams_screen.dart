@@ -9,43 +9,31 @@ class ExamsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          Row(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Expanded(
-                child: FutureBuilder(
-                  future: getPeriodTermsList(),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      List? periodTermsList = snapshot.data;
-                      return Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: DropdownButtonFormField2(
-                            decoration: InputDecoration(
-                              contentPadding:
-                                  const EdgeInsets.symmetric(vertical: 16),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                            ),
-                            onChanged: (value) => print(value),
-                            items: periodTermsList!
-                                .map((item) => DropdownMenuItem(
-                                      value: item['Id'],
-                                      child: Text(item['TermName']),
-                                    ))
-                                .toList()),
-                      );
-                    }
-                    return const Center(child: CircularProgressIndicator());
-                  },
-                ),
-              )
-            ],
-          )
-        ],
+      body: FutureBuilder(
+        future: getPeriodTermsList(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            List? periodTermsList = snapshot.data;
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: DropdownButtonFormField2(
+                  decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.symmetric(vertical: 16),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                  ),
+                  onChanged: (value) => print(value),
+                  items: periodTermsList!
+                      .map((item) => DropdownMenuItem(
+                            value: item['Id'],
+                            child: Text(item['TermName']),
+                          ))
+                      .toList()),
+            );
+          }
+          return const Center(child: CircularProgressIndicator());
+        },
       ),
     );
   }
