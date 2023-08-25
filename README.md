@@ -20,3 +20,5 @@ Sok funckió nincs kész, vagy hiányos, de idővel egyre több dolog lesz elér
 - [ ] Felvett vizsgák megtekintése (félévekre osztva)
 - [ ] Értesítések (új üzenet, jegybeírás, kurzusról lecsúszás, stb.)
 - [ ] Offline mód
+
+## [Screenshotok](screenshots/)
