@@ -10,7 +10,8 @@ class TimetableScreen extends StatelessWidget {
       body: CalendarTimeline(
         locale: 'hu',
         monthColor: Theme.of(context).colorScheme.secondary,
-        activeBackgroundDayColor: Theme.of(context).colorScheme.onSecondary,
+        activeBackgroundDayColor: Theme.of(context).colorScheme.secondary,
+        activeDayColor: Theme.of(context).textTheme.bodyMedium?.color,
         leftMargin: 25,
         onDateSelected: (p0) {
           print(p0);
