@@ -19,6 +19,8 @@ class _MessagesScreenState extends State<MessagesScreen> {
     super.initState();
   }
 
+  bool forceRefresh = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +31,7 @@ class _MessagesScreenState extends State<MessagesScreen> {
                 future: getAllMessages(),
                 builder: (context, snapshot) {
                   if (snapshot.hasError) {
-                    return Icon(Icons.error_outline);
+                    return const Icon(Icons.error_outline);
                   }
                   if (snapshot.hasData) {
                     List? response = snapshot.data;
@@ -37,6 +39,7 @@ class _MessagesScreenState extends State<MessagesScreen> {
                     return RefreshIndicator(
                       triggerMode: RefreshIndicatorTriggerMode.onEdge,
                       onRefresh: () async {
+                        forceRefresh = true;
                         setState(() {});
                       },
                       child: ListView.builder(
@@ -51,7 +54,7 @@ class _MessagesScreenState extends State<MessagesScreen> {
                       ),
                     );
                   }
-                  return Center(child: CircularProgressIndicator());
+                  return const Center(child: CircularProgressIndicator());
                 },
               ))),
     );
@@ -60,11 +63,10 @@ class _MessagesScreenState extends State<MessagesScreen> {
   Future<List?> getAllMessages() async {
     await messagesStorage.ready;
     List? response = await messagesStorage.getItem('messagesList');
-
-    if (response == null || response.isEmpty) {
+    if ((response == null || response.isEmpty || forceRefresh)) {
       try {
         Map tmp = await getMessages();
-        print(tmp['NewMessagesNumber']);
+        //print(tmp['NewMessagesNumber']);
         await messagesStorage.setItem('newMessages', tmp['NewMessagesNumber']);
         await messagesStorage.setItem('messagesList', tmp['MessagesList']);
         response = tmp['MessagesList'];
@@ -72,14 +74,15 @@ class _MessagesScreenState extends State<MessagesScreen> {
         Fluttertoast.showToast(msg: 'Neptun hiba: ${e.errorMessage}');
       }
     }
+    forceRefresh = false;
     return response;
   }
 }
 
 class MessageCard extends StatefulWidget {
-  final messageAuthor;
-  final messageSubject;
-  final messageContent;
+  final String messageAuthor;
+  final String messageSubject;
+  final String messageContent;
   const MessageCard(
       {super.key,
       required this.messageAuthor,
@@ -116,13 +119,14 @@ class _MessageCardState extends State<MessageCard> {
               ));
         },
         child: Padding(
-          padding: EdgeInsets.all(10.0),
+          padding: const EdgeInsets.all(10.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 widget.messageSubject,
-                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
+                style:
+                    const TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
               ),
               Text(messageContentSubstring(
                   removeCssCrapFromMessage(widget.messageContent))),
@@ -135,11 +139,10 @@ class _MessageCardState extends State<MessageCard> {
 }
 
 String removeCssCrapFromMessage(String message) {
-  final String cssPrefix = '\r\n\t\r\n\t\t\r\n\t\t\r\n\t\t\r\n';
-  final String cssPostFix = '\t\t\r\n\t\r\n\t\r\n\t\t';
-  if (message.indexOf(cssPostFix) != -1) {
+  //final String cssPrefix = '\r\n\t\r\n\t\t\r\n\t\t\r\n\t\t\r\n';
+  const String cssPostFix = '\t\t\r\n\t\r\n\t\r\n\t\t';
+  if (message.contains(cssPostFix)) {
     return message.substring(message.indexOf(cssPostFix) + 10);
   }
-  print(message);
   return message;
 }
