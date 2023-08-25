@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:neptunplus_flutter/beallitasok_screen.dart';
 import 'package:neptunplus_flutter/exams_screen.dart';
 import 'package:neptunplus_flutter/messages_screen.dart';
 import 'package:neptunplus_flutter/profile_popup.dart';
@@ -36,10 +37,15 @@ class _MainScreenState extends State<MainScreen> {
     return Scaffold(
       drawer: Drawer(
           child: ListView(
-        children: const [
+        children: [
           ListTile(
-            leading: Icon(Icons.settings_outlined),
-            title: Text('Beállítások'),
+            leading: const Icon(Icons.settings_outlined),
+            title: const Text('Beállítások'),
+            onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const BeallitasokScreen(),
+                )),
           )
         ],
       )),
