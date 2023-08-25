@@ -53,10 +53,10 @@ class _MainScreenState extends State<MainScreen> {
                 onPressed: () {
                   showDialog(
                     context: context,
-                    builder: (context) => ProfilePopup(),
+                    builder: (context) => const ProfilePopup(),
                   );
                 },
-                icon: Icon(Icons.account_circle_outlined)),
+                icon: const Icon(Icons.account_circle_outlined)),
           )
         ],
       ),
@@ -103,10 +103,10 @@ class _MainScreenState extends State<MainScreen> {
         ),
       ),
       body: [
-        MessagesScreen(),
-        TimetableScreen(),
-        SubjectsScreen(),
-        ExamsScreen()
+        const MessagesScreen(),
+        const TimetableScreen(),
+        const SubjectsScreen(),
+        const ExamsScreen()
       ][currentIndex],
     );
   }

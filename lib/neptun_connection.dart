@@ -20,20 +20,20 @@ getCurriculums() async {
   const String curriculumsPath = '/GetCurriculums';
   const String path = '$defaultPath$curriculumsPath';
   final url = Uri.https(host, path);
-  var responseBody;
+  Map? responseBody;
   try {
     var response =
         await http.post(url, headers: defaultHeader, body: jsonEncode(body));
     responseBody = jsonDecode(response.body);
-    if (responseBody['ErrorMessage'] != '') {
-      throw NeptunErrorMessage(responseBody['ErrorMessage']);
+    if (responseBody?['ErrorMessage'] != '') {
+      throw NeptunErrorMessage(responseBody?['ErrorMessage']);
     }
   } on NeptunErrorMessage catch (e) {
     throw NeptunErrorMessage(e.errorMessage);
   } catch (e) {
     print(e);
   }
-  return responseBody[fieldName];
+  return responseBody?[fieldName];
 }
 
 Future<Map<String, dynamic>> getLoggedInBody() async {
@@ -51,7 +51,7 @@ appLogin(neptunCode, password) async {
   await storage.setItem('neptunCode', neptunCode);
   await storage.setItem('password', password);
   // ignore: unused_local_variable
-  var response;
+  Map? response;
   try {
     response = await getCurriculums();
   } on NeptunErrorMessage catch (e) {
@@ -65,13 +65,13 @@ Future<Map<String, dynamic>> getMessages() async {
   const String messagesPath = '/GetMessages';
   const String path = '$defaultPath$messagesPath';
   final url = Uri.https(host, path);
-  var responseBody;
+  Map? responseBody;
   try {
     var response =
         await http.post(url, headers: defaultHeader, body: jsonEncode(body));
     responseBody = jsonDecode(response.body);
-    if (responseBody['ErrorMessage'] != '') {
-      throw NeptunErrorMessage(responseBody['ErrorMessage']);
+    if (responseBody?['ErrorMessage'] != '') {
+      throw NeptunErrorMessage(responseBody?['ErrorMessage']);
     }
   } on NeptunErrorMessage catch (e) {
     throw NeptunErrorMessage(e.errorMessage);
@@ -79,8 +79,8 @@ Future<Map<String, dynamic>> getMessages() async {
     print(e);
   }
   var messagesListAndCount = {
-    'MessagesList': responseBody['MessagesList'],
-    'NewMessagesNumber': responseBody['NewMessagesNumber']
+    'MessagesList': responseBody?['MessagesList'],
+    'NewMessagesNumber': responseBody?['NewMessagesNumber']
   };
 
   return messagesListAndCount;
@@ -91,15 +91,15 @@ Future<List> getPeriodTerms() async {
   const String periodTermsPath = '/GetPeriodTerms';
   const String path = '$defaultPath$periodTermsPath';
   final url = Uri.https(host, path);
-  var responseBody;
+  Map? responseBody;
   try {
     var response =
         await http.post(url, headers: defaultHeader, body: jsonEncode(body));
 
     responseBody = jsonDecode(response.body);
 
-    if (responseBody['ErrorMessages'] != '') {
-      throw NeptunErrorMessage(responseBody['ErrorMessage']);
+    if (responseBody?['ErrorMessages'] != '') {
+      throw NeptunErrorMessage(responseBody?['ErrorMessage']);
     }
   } on NeptunErrorMessage catch (e) {
     throw NeptunErrorMessage(e.errorMessage);
@@ -107,7 +107,7 @@ Future<List> getPeriodTerms() async {
     print(e);
   }
 
-  var periodTermsList = responseBody['PeriodTermsList'];
+  var periodTermsList = responseBody?['PeriodTermsList'];
   return periodTermsList;
 }
 

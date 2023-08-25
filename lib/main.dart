@@ -3,13 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_displaymode/flutter_displaymode.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:localstorage/localstorage.dart';
-import 'package:neptunplus_flutter/home_screen.dart';
 import 'package:neptunplus_flutter/main_screen.dart';
 import 'package:neptunplus_flutter/neptun_connection.dart';
 import 'package:theme_provider/theme_provider.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
   setHighRefreshRate();
 }
 
@@ -18,6 +17,8 @@ setHighRefreshRate() async {
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return DynamicColorBuilder(
@@ -40,7 +41,7 @@ class MyApp extends StatelessWidget {
               builder: (context) => MaterialApp(
                 title: 'Neptun Plus!',
                 theme: ThemeProvider.themeOf(context).data,
-                home: MyHomePage(),
+                home: const MyHomePage(),
               ),
             ),
           ),
@@ -51,6 +52,8 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key});
+
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
@@ -122,9 +125,9 @@ class _MyHomePageState extends State<MyHomePage> {
                     login();
                   },
                   child: (isLoading
-                      ? Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: const CircularProgressIndicator(),
+                      ? const Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: CircularProgressIndicator(),
                         )
                       : const Padding(
                           padding: EdgeInsets.only(
@@ -159,7 +162,7 @@ class _MyHomePageState extends State<MyHomePage> {
     Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => MainScreen(),
+          builder: (context) => const MainScreen(),
         ));
   }
 }

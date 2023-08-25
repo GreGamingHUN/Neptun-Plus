@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:localstorage/localstorage.dart';
 import 'package:neptunplus_flutter/main.dart';
@@ -43,17 +41,16 @@ class _ProfilePopupState extends State<ProfilePopup> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Column(
+              const Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
+                  Text(
                     'Helló,',
                     style: TextStyle(fontSize: 13),
                   ),
                   Text(
                     'ASD123',
-                    style: const TextStyle(
-                        fontSize: 20, fontWeight: FontWeight.w500),
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
                   ),
                 ],
               ),
@@ -63,28 +60,29 @@ class _ProfilePopupState extends State<ProfilePopup> {
                       context: context,
                       builder: (context) {
                         return AlertDialog(
-                          title: Text('Kijelentkezés'),
-                          content: Text('Biztos ki szeretnél jelentkezni?'),
+                          title: const Text('Kijelentkezés'),
+                          content:
+                              const Text('Biztos ki szeretnél jelentkezni?'),
                           actions: [
                             OutlinedButton(
                                 onPressed: () {
                                   logout();
                                 },
-                                child: Text('Kilépés')),
+                                child: const Text('Kilépés')),
                             FilledButton(
                                 onPressed: () {
                                   Navigator.pop(context);
                                 },
-                                child: Text('Mégsem'))
+                                child: const Text('Mégsem'))
                           ],
                         );
                       },
                     );
                   },
-                  icon: Icon(Icons.logout_outlined))
+                  icon: const Icon(Icons.logout_outlined))
             ],
           ),
-          Divider(),
+          const Divider(),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -105,9 +103,9 @@ class _ProfilePopupState extends State<ProfilePopup> {
                   })
             ],
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 8.0),
-            child: const Row(
+          const Padding(
+            padding: EdgeInsets.only(top: 8.0),
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
@@ -129,10 +127,11 @@ class _ProfilePopupState extends State<ProfilePopup> {
   logout() async {
     await storage.deleteItem('neptunCode');
     await storage.deleteItem('password');
+    // ignore: use_build_context_synchronously
     Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => MyApp(),
+          builder: (context) => const MyApp(),
         ));
   }
 }

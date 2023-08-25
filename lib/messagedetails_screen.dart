@@ -3,7 +3,7 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class MessagesDetailsWidget extends StatelessWidget {
-  final messageSubject, messageContent, messageAuthor;
+  final String messageSubject, messageContent, messageAuthor;
   const MessagesDetailsWidget(
       {super.key,
       required this.messageContent,
@@ -25,7 +25,8 @@ class MessagesDetailsWidget extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
                   messageSubject,
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                  style: const TextStyle(
+                      fontSize: 18, fontWeight: FontWeight.w600),
                 ),
               ),
               Html(

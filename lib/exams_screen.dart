@@ -33,8 +33,8 @@ class ExamsScreen extends StatelessWidget {
                             onChanged: (value) => print(value),
                             items: periodTermsList!
                                 .map((item) => DropdownMenuItem(
-                                      child: Text(item['TermName']),
                                       value: item['Id'],
+                                      child: Text(item['TermName']),
                                     ))
                                 .toList()),
                       );
