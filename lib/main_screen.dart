@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:neptunplus_flutter/home_screen.dart';
+import 'package:neptunplus_flutter/exams_screen.dart';
 import 'package:neptunplus_flutter/messages_screen.dart';
 import 'package:neptunplus_flutter/profile_popup.dart';
 import 'package:neptunplus_flutter/subjects_screen.dart';
@@ -68,29 +68,30 @@ class _MainScreenState extends State<MainScreen> {
             selectedIndex: currentIndex,
             destinations: [
               NavigationDestination(
-                  icon: Icon(
-                      (currentIndex == 0 ? Icons.house : Icons.house_outlined)),
-                  label: 'Kezdőlap'),
-              NavigationDestination(
                   icon: (newMessages == 0
                       ? Icon(
-                          currentIndex == 1 ? Icons.mail : Icons.mail_outlined)
+                          currentIndex == 0 ? Icons.mail : Icons.mail_outlined)
                       : Badge(
                           label: Text(newMessages.toString()),
-                          child: Icon(currentIndex == 1
+                          child: Icon(currentIndex == 0
                               ? Icons.mail
                               : Icons.mail_outlined),
                         )),
                   label: 'Üzenetek'),
               NavigationDestination(
-                  icon: Icon(currentIndex == 2
+                  icon: Icon(currentIndex == 1
                       ? Icons.calendar_today
                       : Icons.calendar_today_outlined),
                   label: 'Órarend'),
               NavigationDestination(
                   icon: Icon(
-                      currentIndex == 3 ? Icons.book : Icons.book_outlined),
+                      currentIndex == 2 ? Icons.book : Icons.book_outlined),
                   label: 'Tárgyak'),
+              NavigationDestination(
+                  icon: Icon(currentIndex == 3
+                      ? Icons.library_books
+                      : Icons.library_books_outlined),
+                  label: 'Vizsgák'),
             ],
             onDestinationSelected: (value) {
               setState(() {
@@ -102,10 +103,10 @@ class _MainScreenState extends State<MainScreen> {
         ),
       ),
       body: [
-        HomeScreen(),
         MessagesScreen(),
         TimetableScreen(),
-        SubjectsScreen()
+        SubjectsScreen(),
+        ExamsScreen()
       ][currentIndex],
     );
   }
