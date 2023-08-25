@@ -8,6 +8,8 @@ environment:
 
 dependencies:
   badges: ^3.1.1
+  calendar_timeline: ^1.1.2
+  dropdown_button2: ^2.3.6
   dynamic_color: ^1.6.6
   flutter:
     sdk: flutter
